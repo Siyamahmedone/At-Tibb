@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change
+{% endblock %}
+
+{% block main %}
+    <form action="/change" method="post">
+        <h1 class="mb-4 text-primary">Change Information</h1>
+
+        <!-- Doctor Info Card -->
+        <div class="card shadow-sm mb-4 rounded-3">
+            <div class="card-header bg-success text-white fw-bold">
+                Doctor Info
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="doctor-name" class="form-label">Name</label>
+                    <input id="doctor-name" name="doctor-name" type="text" class="form-control" placeholder="Name" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="qualification" class="form-label">Qualification</label>
+                    <input id="qualification" name="qualification" type="text" class="form-control" placeholder="Qualification" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="department" class="form-label">Department</label>
+                    <input id="department" name="department" type="text" class="form-control" placeholder="Department" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="registration" class="form-label">Registration No.</label>
+                    <input id="registration" name="registration" type="text" class="form-control" placeholder="Registration No." autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <!-- Clinic Info Card -->
+        <div class="card shadow-sm mb-4 rounded-3">
+            <div class="card-header bg-success text-white fw-bold">
+                Clinic Info
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="clinic-name" class="form-label">Name</label>
+                    <input id="clinic-name" name="clinic-name" type="text" class="form-control" placeholder="Clinic Name" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input id="address" name="address" type="text" class="form-control" placeholder="Address" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="contact" class="form-label">Contact</label>
+                    <input id="contact" name="contact" type="text" class="form-control" placeholder="Contact" autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" name="email" type="email" class="form-control" placeholder="Email" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <button id="changeBtn" class="btn btn-primary" type="submit" onclick="clearData('account')">Change</button>
+    </form>
+{% endblock %}

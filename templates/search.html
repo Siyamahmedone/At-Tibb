@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+    <div class="container my-4">
+        <h1 class="mb-4 text-center">Search Prescriptions</h1>
+        <p class="text-center text-muted">Fill in any field you have; leave the rest blank</p>
+
+        <form action="/search" method="post" autocomplete="off">
+
+            <!-- Prescription Info -->
+            <div class="card mb-4">
+                <div class="card-header">Prescription Info</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input autofocus autocomplete="off" class="form-control" name="id" placeholder="Prescription ID" type="text">
+                    </div>
+                    <div class="row g-3">
+                        <div class="col">
+                            <input autocomplete="off" class="form-control" name="day" placeholder="Day" type="number">
+                        </div>
+                        <div class="col">
+                            <input autocomplete="off" class="form-control" name="month" placeholder="Month" type="number">
+                        </div>
+                        <div class="col">
+                            <input autocomplete="off" class="form-control" name="year" placeholder="Year" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Info -->
+            <div class="card mb-4">
+                <div class="card-header">Patient Info</div>
+                <div class="card-body">
+                    <datalist id="name_list"></datalist>
+                    <datalist id="age_list"></datalist>
+
+                    <div class="mb-3">
+                        <input id="patient_name" autocomplete="off" class="patient form-control" name="patient-name" placeholder="Name" type="text" list="name_list" oninput="queryName(this)">
+                    </div>
+
+                    <div class="mb-3">
+                        <input id="age" autocomplete="off" class="patient form-control" name="age" placeholder="Age" type="text" list="age_list" onfocus="queryType(this)">
+                    </div>
+
+                    <div class="mb-3">
+                        <select id="sex" class="patient form-select" name="sex" onfocus="queryType(this)">
+                            <option disabled selected>Sex</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medication Info -->
+            <div class="card mb-4">
+                <div class="card-header">Medication Info</div>
+                <div class="card-body">
+                    <datalist id="med_name_list"></datalist>
+                    <datalist id="form_list"></datalist>
+                    <datalist id="dose_list"></datalist>
+
+                    <div class="mb-3">
+                        <input id="med_name" autocomplete="off" class="medication form-control" name="med_name" placeholder="Medication Name" type="text" list="med_name_list" oninput="queryName(this)">
+                    </div>
+
+                    <div class="mb-3">
+                        <input id="dose" autocomplete="off" class="medication form-control" name="dose" placeholder="Dose (e.g. __mg)" type="text" list="dose_list" onfocus="queryType(this)">
+                    </div>
+
+                    <div class="mb-3">
+                        <input id="form" autocomplete="off" class="medication form-control" name="form" placeholder="Form (e.g. Tab.)" type="text" list="form_list" onfocus="queryType(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary btn-lg" type="submit">Search</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

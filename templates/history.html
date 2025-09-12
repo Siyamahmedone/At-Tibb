@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+<div class="container my-4">
+    <h2 class="mb-4 text-center">Prescription History</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>TIMESTAMP</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in data %}
+                <tr class="table-row" onclick="goToLink(this)">
+                    <td >{{row.id}}</td>
+                    <td>{{row.patient_name}}</td>
+                    <td>{{row.day}}/{{row.month}}/{{row.year}}</td>
+                    <td>{{row.timestamp}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

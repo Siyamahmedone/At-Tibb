@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Check
+{% endblock %}
+
+{% block main %}
+    <div class="container my-5" style="max-width: 450px;">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title mb-4 text-center">Confirm Action</h3>
+                <p class="text-center mb-4">Input Password to proceed</p>
+                <form action="/check" method="post">
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control" name="password" placeholder="Password" type="password" required>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+<div class="container my-5" style="max-width: 600px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center">Register</h2>
+            <form action="/register" method="post">
+
+                <fieldset class="border p-3 mb-3">
+                    <legend class="w-auto text-primary">Basic Info</legend>
+                    <div class="mb-3">
+                        <input id="username" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" oninput="checkUserName(this)" required>
+                        <div id="username-feedback" class="text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="password" placeholder="Password" type="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="confirmation" placeholder="Password (again)" type="password" required>
+                    </div>
+                </fieldset>
+
+                <fieldset class="border p-3 mb-3">
+                    <legend class="w-auto text-success">Doctor Info</legend>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="doctor-name" placeholder="Name" type="text" required>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="qualification" placeholder="Qualification" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="department" placeholder="Department" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="registration" placeholder="Registration No." type="text">
+                    </div>
+                </fieldset>
+
+                <fieldset class="border p-3 mb-3">
+                    <legend class="w-auto text-success">Clinic Info</legend>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="clinic-name" placeholder="Name" type="text" required>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="address" placeholder="Address" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="contact" placeholder="Contact" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" class="form-control" name="email" placeholder="Email" type="email">
+                    </div>
+                </fieldset>
+
+                <div class="d-grid">
+                    <button class="btn btn-success" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block script %}
+    <script>
+        // Always load from localStorage
+        const stored = localStorage.getItem("medData");
+        let medData = null;
+        if (stored) {
+            medData = JSON.parse(stored);
+            console.log("Loaded med data:", medData);
+        }
+    </script>
+    <script src="/static/script_form.js"></script>
+{% endblock %}
+
+{% block main %}
+    <form class="prescription container-fluid" action="/edit?id={{prescription.id}}" method="post">
+        <!-- Top Header -->
+        <div class="header">
+            <div class="doctor">
+                <div id="doctor-name"></div>
+                <div id="qualification"></div>
+                <div id="department"></div>
+                <div id="registration"></div>
+            </div>
+
+            <div class="logo">
+                <div class="id">ID No: {{prescription.id}}</div>
+                <img class="img-fluid" src="/static/logo.png" width="40%" alt="logo">
+            </div>
+
+            <div class="clinic">
+                <div id="clinic-name"></div>
+                <div id="address"></div>
+                <div id="contact"></div>
+                <div id="email"></div>
+            </div>
+        </div>
+
+        <!-- Patient Row -->
+        <div class="patient-row">
+            <div class="field mb-2 d-flex align-items-center">
+                <label>Name:&nbsp;</label>
+                <input autofocus autocomplete="off" class="form-control form-control-sm" type="text" name="patient-name" value="{{patient.patient_name}}" required>
+            </div>
+
+            <div class="field mb-2 d-flex align-items-center">
+                <label>Age:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input autofocus autocomplete="off" class="form-control form-control-sm" type="text" name="age" value="{{patient.age}}">
+            </div>
+
+            <div class="field">
+                <label>Sex:</label>
+                <div class="select">
+                    <select class="form-select mx-auto w-auto" name="sex">
+                        <option value="male" {% if patient.sex == "male" %}selected{% endif %}>Male</option>
+                        <option value="female" {% if patient.sex == "female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Date:</label>
+                <div class="date d-flex">
+                    <input id="day" name="day" type="text" class="form-control form-control-sm text-center" maxlength="2" placeholder="DD" tabindex="-1" value="{{prescription.day}}">
+                    <span class="fw-bold">/</span>
+                    <input id="month" name="month" type="text" class="form-control form-control-sm text-center" maxlength="2" placeholder="MM" tabindex="-1" value="{{prescription.month}}">
+                    <span class="fw-bold">/</span>
+                    <input id="year" name="year" type="text" class="form-control form-control-sm text-center" maxlength="4" placeholder="YYYY" tabindex="-1" value="{{prescription.year}}">
+                </div>
+            </div>
+        </div>
+
+                <!-- Main Content -->
+        <div class="content">
+            <!-- Left Diagnosis Section -->
+            <div class="left-section">
+                <div class="block">
+                    <label>Chief Complaints</label>
+                    <textarea class="expand" name="chief-complaints" rows="3">{{vital.chief_complaints}}</textarea>
+                </div>
+
+                <div class="block">
+                    <label>On Examination</label>
+                    <textarea class="expand" name="on-examination" rows="3">{{vital.on_examination}}</textarea>
+                </div>
+
+                <div class="block">
+                    <label>Test Advised</label>
+                    <textarea class="expand" name="test-advised" rows="3">{{vital.test_advised}}</textarea>
+                </div>
+
+                <div class="block">
+                    <label>Diagnosis</label>
+                    <textarea class="expand" name="diagnosis" rows="3">{{vital.diagnosis}}</textarea>
+                </div>
+            </div>
+
+            <!-- Right Prescription Section -->
+            <div class="right-section table-responsive">
+                <table class="table table-sm table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Rx</th>
+                            <th>Medication</th>
+                            <th>Dosage</th>
+                            <th>Form</th>
+                            <th>Schedule</th>
+                            <th>Timing</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="medications">
+                        <!--initial datalist-->
+                        <datalist id="med_list"></datalist>
+
+                        <!--Build the Table-->
+                        {% for med in medications %}
+                            <!-- medication row -->
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td><input id="med_name_{{ loop.index }}" list="med_list_{{ loop.index }}" autocomplete="off" type="text" name="med_name[]" class="form-control form-control-md" onfocus="setNameList(this)" value="{{med.med_name}}"></td>
+                                <td><input id="dose_{{ loop.index }}" list="dose_list_{{ loop.index }}" autocomplete="off" type="text" name="dose[]" class="form-control form-control-md" onfocus="setTypeList(this)" value="{{med.dose}}"></td>
+                                <td><input id="form_{{ loop.index }}" list="form_list_{{ loop.index }}" autocomplete="off" type="text" name="form[]" class="form-control form-control-md" onfocus="setTypeList(this)" value="{{med.form}}"></td>
+                                <td><input id="schedule_{{ loop.index }}" list="schedule_list_{{ loop.index }}" autocomplete="off" type="text" name="schedule[]" class="form-control form-control-md" onfocus="setTypeList(this)" value="{{med.schedule}}"></td>
+                                <td><input id="timing_{{ loop.index }}" list="timing_list_{{ loop.index }}" autocomplete="off" type="text" name="timing[]" class="form-control form-control-md" onfocus="setTypeList(this)" value="{{med.timing}}"></td>
+                                <td><input id="duration_{{ loop.index }}" list="duration_list_{{ loop.index }}" autocomplete="off" type="text" name="duration[]" class="form-control form-control-md" onfocus="setTypeList(this)" value="{{med.duration}}"></td>
+                            </tr>
+
+                            <!--Build datalist each cycle-->
+                            <datalist id="med_list_{{ loop.index }}"></datalist>
+                            <datalist id="dose_list_{{ loop.index }}"></datalist>
+                            <datalist id="form_list_{{ loop.index }}"></datalist>
+                            <datalist id="schedule_list_{{ loop.index }}"></datalist>
+                            <datalist id="timing_list_{{ loop.index }}"></datalist>
+                            <datalist id="duration_list_{{ loop.index }}"></datalist>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!--Buttons-->
+                <div class="btn-group mb-5">
+                    <button id="addRowBtn" type="button" class="btn btn-sm btn-primary" onclick="addRow()">Add Medication</button>
+                    <button id="removeRowBtn" type="button" class="btn btn-sm btn-danger" tabindex="-1">Remove Medication</button>
+                </div>
+            </div>
+        </div>
+        <button id="save" class="btn btn-success btn-lg" type="submit">Save Prescription</button>
+        <button class="btn btn-danger btn-sm" onclick="history.back()">Cancel change</button>
+    </form>
+{% endblock %}

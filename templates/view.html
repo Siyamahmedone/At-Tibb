@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    View
+{% endblock %}
+
+{% block main %}
+    <div class="page">
+        <!-- Top Header -->
+        <div class="header" style="padding: 10px">
+            <div class="doctor">
+                <div id="doctor-name"></div>
+                <div id="qualification"></div>
+                <div id="department"></div>
+                <div id="registration"></div>
+            </div>
+
+            <div class="logo">
+                <div class="id">ID No: {{prescription.id}}</div>
+                <img class="img-fluid" src="/static/logo.png" width="40%" alt="logo">
+            </div>
+
+            <div class="clinic">
+                <div id="clinic-name"></div>
+                <div id="address"></div>
+                <div id="contact"></div>
+                <div id="email"></div>
+            </div>
+        </div>
+
+        <!-- Patient Row -->
+        <div class="patient-row p-3">
+            <div>Name: {{patient.patient_name}}</div>
+            <div>Age: {{patient.age}}</div>
+            <div>Sex: {{patient.sex}}</div>
+            <div>Date: {{prescription.day}}/{{prescription.month}}/{{prescription.year}}</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Left Diagnosis Section -->
+            <div class="left-section">
+                <div class="block">
+                    <strong>Chief Complaints</strong>
+                    <div class="preserve-text">{{vital.chief_complaints}}</div>
+                </div>
+
+                <div class="block">
+                    <strong>On Examination</strong>
+                    <div class="preserve-text">{{vital.on_examination}}</div>
+                </div>
+
+                <div class="block">
+                    <strong>Test Advised</strong>
+                    <div class="preserve-text">{{vital.test_advised}}</div>
+                </div>
+
+                <div class="block">
+                    <strong>Diagnosis</strong>
+                    <div class="preserve-text">{{vital.diagnosis}}</div>
+                </div>
+            </div>
+
+            <!-- Right Prescription Section -->
+            <div class="right-section" id="view-right-section">
+                <div id="view-rx">Rx</div>
+                <!-- All row -->
+                {% for med in medications %}
+                    <div class="view-row mb-2">
+                    {{med.sequence}}. {{med.form}} {{med.med_name}} {{med.dose}}<br>
+                    &nbsp;&nbsp;&nbsp;{{med.schedule}} {{med.timing}} {{med.duration}}
+                    </div>
+                {% endfor %}
+
+                <div class="sign">
+                    <div class="sign-content">Doctor's signature</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="no-print btn-group mt-3">
+            <a class="btn btn-success btn-lg" href="/">Home</a>
+            <a class="btn btn-danger btn-lg" href="/edit?id={{prescription.id}}">Edit</a>
+            <button class="btn btn-primary btn-lg" onclick="print()">Print</button>
+        </div>
+    </div>
+  {% endblock %}

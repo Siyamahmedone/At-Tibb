@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block script %}
+    <script>
+        // Store medData for suggest function
+        if ((!localStorage.getItem("medData")) || Object.keys(JSON.parse(localStorage.getItem("medData"))).length === 0 ) {
+            localStorage.setItem("medData", JSON.stringify({{ med_data|default({})|tojson|safe }}));
+        }
+        if ((!localStorage.getItem("doctorRow")) || Object.keys(JSON.parse(localStorage.getItem("doctorRow"))).length === 0 ) {
+            localStorage.setItem("doctorRow", JSON.stringify({{ doctor_row|default({})|tojson|safe }}));
+            localStorage.setItem("clinicRow", JSON.stringify({{ clinic_row|default({})|tojson|safe }}));
+        }
+        // Always load from localStorage
+        const stored = localStorage.getItem("medData");
+        let medData = null;
+        if (stored) {
+            medData = JSON.parse(stored);
+            console.log("Loaded med data:", medData);
+        }
+    </script>
+    <script src="/static/script_form.js"></script>
+{% endblock %}
+
+{% block main %}
+    <form class="prescription container-fluid" action="/" method="post">
+        <!-- Top Header -->
+        <div class="header">
+            <div class="doctor">
+                <div id="doctor-name"></div>
+                <div id="qualification"></div>
+                <div id="department"></div>
+                <div id="registration"></div>
+            </div>
+
+            <div class="logo">
+                <img class="img-fluid" src="/static/logo.png" alt="logo" width="40%">
+            </div>
+
+            <div class="clinic">
+                <div id="clinic-name"></div>
+                <div id="address"></div>
+                <div id="contact"></div>
+                <div id="email"></div>
+            </div>
+        </div>
+
+        <!-- Patient Row -->
+        <div class="patient-row">
+            <div class="field mb-2 d-flex align-items-center">
+                <label>Name:&nbsp;</label>
+                <input autofocus autocomplete="off" class="form-control form-control-sm" type="text" name="patient-name" required>
+            </div>
+
+            <div class="field mb-2 d-flex align-items-center">
+                <label>Age:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input autofocus autocomplete="off" class="form-control form-control-sm" type="text" name="age">
+            </div>
+
+            <div class="field">
+                <label>Sex:</label>
+                <div class="select">
+                    <select class="form-select" name="sex">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Date:</label>
+                <div class="date d-flex">
+                    <input id="day" name="day" type="text" class="form-control form-control-sm text-center" maxlength="2" placeholder="DD" tabindex="-1">
+                    <span class="fw-bold">/</span>
+                    <input id="month" name="month" type="text" class="form-control form-control-sm text-center" maxlength="2" placeholder="MM" tabindex="-1">
+                    <span class="fw-bold">/</span>
+                    <input id="year" name="year" type="text" class="form-control form-control-sm text-center" maxlength="4" placeholder="YYYY" tabindex="-1">
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Left Diagnosis Section -->
+            <div class="left-section">
+                <div class="block">
+                    <label>Chief Complaints</label>
+                    <textarea class="expand" name="chief-complaints" rows="3"></textarea>
+                </div>
+
+                <div class="block">
+                    <label>On Examination</label>
+                    <textarea class="expand" name="on-examination" rows="3"></textarea>
+                </div>
+
+                <div class="block">
+                    <label>Test Advised</label>
+                    <textarea class="expand" name="test-advised" rows="3"></textarea>
+                </div>
+
+                <div class="block">
+                    <label>Diagnosis</label>
+                    <textarea class="expand" name="diagnosis" rows="3"></textarea>
+                </div>
+            </div>
+
+          <!-- Right Prescription Section -->
+            <div class="right-section table-responsive">
+                <table class="table table-sm table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Rx</th>
+                            <th>Medication</th>
+                            <th>Dosage</th>
+                            <th>Form</th>
+                            <th>Schedule</th>
+                            <th>Timing</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="medications">
+                        <!-- medication row -->
+                        <tr>
+                            <td>1</td>
+                            <td><input id="med_name_1" list="med_list_1" autocomplete="off" type="text" name="med_name[]" class="form-control form-control-md" onfocus="setNameList(this)" placeholder="Med?"></td>
+                            <td><input id="dose_1" list="dose_list_1" autocomplete="off" type="text" name="dose[]" class="form-control form-control-md" onfocus="setTypeList(this)" placeholder="mg?"></td>
+                            <td><input id="form_1" list="form_list_1" autocomplete="off" type="text" name="form[]" class="form-control form-control-md" onfocus="setTypeList(this)" placeholder="Tab.?"></td>
+                            <td><input id="schedule_1" list="schedule_list_1" autocomplete="off" type="text" name="schedule[]" class="form-control form-control-md" onfocus="setTypeList(this)" placeholder="1+1+1?"></td>
+                            <td><input id="timing_1" list="timing_list_1" autocomplete="off" type="text" name="timing[]" class="form-control form-control-md" onfocus="setTypeList(this)" placeholder="After/Before?"></td>
+                            <td><input id="duration_1" list="duration_list_1" autocomplete="off" type="text" name="duration[]" class="form-control form-control-md" onfocus="setTypeList(this)" placeholder="Continue.?"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!--Buttons-->
+                <div class="btn-group mb-5">
+                    <button id="addRowBtn" type="button" class="btn btn-sm btn-primary" onclick="addRow()">Add Medication</button>
+                    <button id="removeRowBtn" type="button" class="btn btn-sm btn-danger" tabindex="-1">Remove Medication</button>
+                </div>
+
+                <!--All datalist here,-->
+                <datalist id="med_list"></datalist>
+                <datalist id="med_list_1"></datalist>
+                <datalist id="dose_list_1"></datalist>
+                <datalist id="form_list_1"></datalist>
+                <datalist id="schedule_list_1"></datalist>
+                <datalist id="timing_list_1"></datalist>
+                <datalist id="duration_list_1"></datalist>
+            </div>
+        </div>
+        <button id="save" class="btn btn-success btn-lg" type="submit">Save Prescription</button>
+    </form>
+{% endblock %}
+
