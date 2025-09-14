@@ -2,7 +2,7 @@
 /* font and CAPS */
 body { font-family: Georgia, serif; font-size: 1rem; text-align: center; }
 input, textarea { font-family: Helvetica, sans-serif; }
-
+.med-name { text-transform: uppercase; }
 /* layout page style */
 /*---Nav-bar---*/
 /* Size for brand */

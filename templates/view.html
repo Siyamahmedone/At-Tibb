@@ -67,7 +67,7 @@
                 <!-- All row -->
                 {% for med in medications %}
                     <div class="view-row mb-2">
-                    {{med.sequence}}. {{med.form}} {{med.med_name}} {{med.dose}}<br>
+                    {{med.sequence}}. {{med.form}} <span class="med-name">{{med.med_name}}</span> {{med.dose}}<br>
                     &nbsp;&nbsp;&nbsp;{{med.schedule}} {{med.timing}} {{med.duration}}
                     </div>
                 {% endfor %}
