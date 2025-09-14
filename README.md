@@ -1,5 +1,6 @@
-# At-Tibb
+# At-Tibb (v1.1)
 #### Video Demo:  <https://youtu.be/mrhkODf59fw>
+#### Live Demo: <https://at-tibb.onrender.com>  
 #### Description:
 **At-Tibb** is a web application designed for managing doctor and clinic information and creating, processing, and storing patient prescriptions dynamically. The app features auto-suggestions for medications and their details, efficient management of prescription data, and storage in a database for future retrieval and review.
 
@@ -86,6 +87,7 @@ The application is designed for both desktop and mobile use, featuring auto-resi
 - Enter medication details; suggestions appear dynamically from medData.
 - Add medication rows using the Add Row button.
 - Remove rows by enabling Remove Medication and selecting the desired row.
+- To update prescription medication list after subsequent prescription entry use "Refresh" from the navigation bar.
 
 3. Saving Prescriptions: Click Save to store the data in the database, after which you would be directed to view page of the prescription
 
@@ -160,6 +162,7 @@ The application is designed for both desktop and mobile use, featuring auto-resi
 
 ## Credits
 The project was developed solely by me as the final project for **CS50x** with some help from
+- The CS50 week 9 problemset, finance and it's implementation as inspiration. 
 - ChatGPT and AI models for suggestions and debugging of the app, it's scripts and improving it's pages
 - Special thanks to my friends for helpful ideas and suggestions.
 - Built using **Python, Flask, SQLite, HTML, CSS, and JavaScript**.
