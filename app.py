@@ -99,7 +99,7 @@ def register():
     # if request form submitted
     if request.method == "POST":
         # ---Account Basic info---
-        username = request.form.get("username").lower()
+        username = request.form.get("username")
         # Check if an username already exists
         with engine.connect() as conn:
             user = conn.execute(text("SELECT id FROM users WHERE username = :name"), {"name": username}).mappings().first()
@@ -129,17 +129,17 @@ def register():
 
         # ---Account Additinal info---
         doctor_info = {
-            "name": request.form.get("doctor-name").lower(),
-            "qualification": request.form.get("qualification").lower(),
-            "department": request.form.get("department").lower(),
-            "registration": request.form.get("registration").lower()
+            "name": request.form.get("doctor-name"),
+            "qualification": request.form.get("qualification"),
+            "department": request.form.get("department"),
+            "registration": request.form.get("registration")
             }
 
         clinic_info = {
-            "name": request.form.get("clinic-name").lower(),
-            "address": request.form.get("address").lower(),
-            "contact": request.form.get("contact").lower(),
-            "email": request.form.get("email").lower()
+            "name": request.form.get("clinic-name"),
+            "address": request.form.get("address"),
+            "contact": request.form.get("contact"),
+            "email": request.form.get("email")
             }
 
         # After all above ensured try INSERTing user
@@ -175,7 +175,7 @@ def register():
 @app.route("/users")
 def users():
     # Get New user typed username
-    name = request.args.get("name").lower()
+    name = request.args.get("name")
     # Check if this username belongs to any other user
     with engine.connect() as conn:
         user = conn.execute(text("SELECT id FROM users WHERE username = :name"), {"name": name}).mappings().first()
@@ -202,20 +202,20 @@ def index():
         year = norm(request.form.get("year"))
 
         # Get Patient Info
-        patient_name = request.form.get("patient-name").lower()
+        patient_name = request.form.get("patient-name")
         # Check if patient name is given or else return
         if not patient_name:
             flash("Missing patient name!", "danger")
             return redirect ("/")
 
-        age = request.form.get("age").lower()
+        age = request.form.get("age")
         sex = request.form.get("sex")
 
         # Get Vitals Info
-        chief_complaints = request.form.get("chief-complaints").lower()
-        on_examination = request.form.get("on-examination").lower()
-        test_advised = request.form.get("test-advised").lower()
-        diagnosis = request.form.get("diagnosis").lower()
+        chief_complaints = request.form.get("chief-complaints")
+        on_examination = request.form.get("on-examination")
+        test_advised = request.form.get("test-advised")
+        diagnosis = request.form.get("diagnosis")
 
         # Get med Info(The total List of Info)
         med_names = request.form.getlist("med_name[]")
@@ -258,12 +258,12 @@ def index():
                             {
                                 "prid": prescription_id,
                                 "seq": index,
-                                "name": name.lower(),
-                                "dose": dose.lower(),
-                                "form": form.lower(),
-                                "schedule": schedule.lower(),
-                                "timing": timing.lower(),
-                                "duration": duration.lower(),
+                                "name": name,
+                                "dose": dose,
+                                "form": form,
+                                "schedule": schedule,
+                                "timing": timing,
+                                "duration": duration,
                                 "uid": user_id
                             }
                         )
@@ -451,15 +451,15 @@ def edit():
         year = norm(request.form.get("year"))
 
         # Get Patient Info
-        patient_name = request.form.get("patient-name").lower()
-        age = request.form.get("age").lower()
+        patient_name = request.form.get("patient-name")
+        age = request.form.get("age")
         sex = request.form.get("sex")
 
         # Get Vitals Info
-        chief_complaints = request.form.get("chief-complaints").lower()
-        on_examination = request.form.get("on-examination").lower()
-        test_advised = request.form.get("test-advised").lower()
-        diagnosis = request.form.get("diagnosis").lower()
+        chief_complaints = request.form.get("chief-complaints")
+        on_examination = request.form.get("on-examination")
+        test_advised = request.form.get("test-advised")
+        diagnosis = request.form.get("diagnosis")
 
         # Get med Info
         med_names = request.form.getlist("med_name[]")
@@ -497,12 +497,12 @@ def edit():
                         conn.execute(
                             text("UPDATE medications SET med_name = :name, dose = :dose, form = :form, schedule = :schedule, timing = :timing, duration = :duration WHERE prescription_id = :prid AND sequence = :seq"),
                             {
-                                "name": name.lower(), 
-                                "dose": dose.lower(), 
-                                "form": form.lower(), 
-                                "schedule": schedule.lower(), 
-                                "timing": timing.lower(), 
-                                "duration": duration.lower(), 
+                                "name": name, 
+                                "dose": dose, 
+                                "form": form, 
+                                "schedule": schedule, 
+                                "timing": timing, 
+                                "duration": duration, 
                                 "prid": prescription_id, 
                                 "seq": index
                             }
@@ -516,12 +516,12 @@ def edit():
                             {
                                 "prid": prescription_id,
                                 "seq": index,
-                                "name": name.lower(),
-                                "dose": dose.lower(),
-                                "form": form.lower(),
-                                "schedule": schedule.lower(),
-                                "timing": timing.lower(),
-                                "duration": duration.lower(),
+                                "name": name,
+                                "dose": dose,
+                                "form": form,
+                                "schedule": schedule,
+                                "timing": timing,
+                                "duration": duration,
                                 "uid": user_id
                             }
                         )
@@ -656,17 +656,17 @@ def change():
 
         # Get Account Additinal info
         doctor_info = {
-            "name": request.form.get("doctor-name").lower(),
-            "qualification": request.form.get("qualification").lower(),
-            "department": request.form.get("department").lower(),
-            "registration": request.form.get("registration").lower()
+            "name": request.form.get("doctor-name"),
+            "qualification": request.form.get("qualification"),
+            "department": request.form.get("department"),
+            "registration": request.form.get("registration")
             }
 
         clinic_info = {
-            "name": request.form.get("clinic-name").lower(),
-            "address": request.form.get("address").lower(),
-            "contact": request.form.get("contact").lower(),
-            "email": request.form.get("email").lower()
+            "name": request.form.get("clinic-name"),
+            "address": request.form.get("address"),
+            "contact": request.form.get("contact"),
+            "email": request.form.get("email")
             }
 
         try:
@@ -726,11 +726,11 @@ def search():
             "day": request.form.get("day", "").strip() or None,
             "month": request.form.get("month", "").strip() or None,
             "year": request.form.get("year", "").strip() or None,
-            "patient_name": request.form.get("patient-name", "").strip().lower() or None,
+            "patient_name": request.form.get("patient-name", "").strip() or None,
             "age": norm(request.form.get("age", "")).strip() or None,
             "sex": request.form.get("sex", "").strip() or None,
-            "med_name": request.form.get("med_name", "").strip().lower() or None,
-            "form": request.form.get("form", "").strip().lower() or None,
+            "med_name": request.form.get("med_name", "").strip() or None,
+            "form": request.form.get("form", "").strip() or None,
             "dose": norm(request.form.get("dose", "")).strip() or None,
         }
 
@@ -749,7 +749,7 @@ def search():
         for key in filters:
             if filters[key]:
                 if key in ["patient_name", "age", "med_name", "form", "dose"]:
-                    query += f" AND {key} LIKE :{key}"
+                    query += f" AND LOWER({key}) LIKE LOWER(:{key})"
                     params[key] = f"%{filters[key]}%"
                 else:
                     query += f" AND {key} = :{key}"
@@ -778,9 +778,9 @@ def query():
 
     # First Get data to make a SQL query
     # Query would pass only the base element value(e.g. value of patient_name, ...)
-    base_value = request.args.get("value").lower()
+    base_value = request.args.get("value")
     # Type or ID of element e.g. patient_name, age...
-    type = request.args.get("type").lower()
+    type = request.args.get("type")
     print(type)
 
     # mapping for table template and base template
@@ -803,12 +803,12 @@ def query():
         if "name" in type:
             # Seek all Name(e.g. patient_name) suggestion from table // WHERE {base_tmp}column LIKE base_value
             with engine.connect() as conn:
-                results = conn.execute(text(f"SELECT {type} FROM {table_tmp} WHERE {base_tmp} LIKE :base_value GROUP BY {type} ORDER BY COUNT(*) DESC LIMIT 10"), {"base_value": f"%{base_value}%"}).mappings().all()
+                results = conn.execute(text(f"SELECT {type} FROM {table_tmp} WHERE LOWER({base_tmp}) LIKE LOWER(:base_value) GROUP BY {type} ORDER BY COUNT(*) DESC LIMIT 10"), {"base_value": f"%{base_value}%"}).mappings().all()
         # Case: queryType, queryDropDown e.g. age..., dose...
         else:
             # Seek all type(e.g. age...) suggestion from table based on base(e.g. patient_name) // WHERE {base_tmp}column = base_value
             with engine.connect() as conn:
-                results = conn.execute(text(f"SELECT {type} FROM {table_tmp} WHERE {base_tmp} = :base_value GROUP BY {type} ORDER BY COUNT(*) DESC LIMIT 10"), {"base_value": base_value}).mappings().all()
+                results = conn.execute(text(f"SELECT {type} FROM {table_tmp} WHERE LOWER({base_tmp}) = LOWER(:base_value) GROUP BY {type} ORDER BY COUNT(*) DESC LIMIT 10"), {"base_value": base_value}).mappings().all()
 
         # Alternative: Merge these both(i.e. LIKE = ?) which would allow similar base to get same suggestions of type
 

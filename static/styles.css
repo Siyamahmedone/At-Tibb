@@ -2,7 +2,6 @@
 /* font and CAPS */
 body { font-family: Georgia, serif; font-size: 1rem; text-align: center; }
 input, textarea { font-family: Helvetica, sans-serif; }
-.header, .patient-row span, .left-section .preserve-text, .right-section .view-row, tbody .table-row { text-transform: uppercase; }
 
 /* layout page style */
 /*---Nav-bar---*/
