@@ -114,14 +114,12 @@ function clearData(name) {
         console.log("Cleared: all");
     }
     else if (name === 'account') {
-        setTimeout(() => {
-            ["doctorRow", "clinicRow"].forEach(key => {
-                if (localStorage.getItem(key)) {
-                    localStorage.removeItem(key);
-                }
-            });
-            console.log("Cleared: account");
-        }, 1000); // 1 second delay
+        ["doctorRow", "clinicRow"].forEach(key => {
+            if (localStorage.getItem(key)) {
+                localStorage.removeItem(key);
+            }
+        });
+        console.log("Cleared: account");
     }
 }
 

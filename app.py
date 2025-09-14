@@ -571,7 +571,7 @@ def account():
     with engine.connect() as conn:
         user_row = conn.execute(text("SELECT id, username FROM users where id = :id"), {"id": user_id}).mappings().first()
 
-    return render_template("account.html", user=dict(user_row) if user_row else {})
+    return render_template("account.html", user_row=dict(user_row) if user_row else {})
 
 # Route for password check
 @app.route("/check", methods=["GET", "POST"])
@@ -685,9 +685,11 @@ def change():
             app.logger.error(f"Account Information Change failed: {e}")
             flash("Account Information change failed, Please try again/later", "danger")
     
-        # Redirect to account page
-        return redirect("/account")
+        # Redirect to index and Mark account data to send
+        session["account"] = False
+        # Pass rows directly to template + convert to dict for safe JSON usage
 
+        return redirect ("/")
     # if change page viewed
     else:
         return render_template("change.html")
